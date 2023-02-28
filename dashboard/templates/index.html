@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-3 pt-3">
+    <div class="col-md-4">
+        <div class="border p-3 shadow">
+            <h4>Add Data</h4>
+            <hr>
+
+            <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Country</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Population*</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div><br />
+                <button type="submit" class="btn btn-primary mt -3">Submit</button>
+              </form>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div>
+            <canvas id="myChart"></canvas>
+          </div>
+          
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          
+          <script>
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: [{% for data in data %} '{{data.country}}', {% endfor %}],
+                datasets: [{
+                  label: '# of Population',
+                //   
+                  data: [{% for data in data %} {{data.population}}, {% endfor %}],
+                //   
+                  backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                    ],
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+          
+    </div>
+</div>
+{% endblock %}
